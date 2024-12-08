@@ -73,20 +73,35 @@ export default function ProductList() {
         ));
     };
 
-    // Render filtered products
+    // Render filtered products as cards
     const displayProducts = () => {
         if (filteredProducts.length > 0) {
             return filteredProducts.map((product) => (
-                <Product product={product} key={product.id} />
+                <div className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4" key={product.id}>
+                    <div className="card product-card h-100">
+                        <img
+                            src={product.image}
+                            className="card-img-top product-image"
+                            alt={product.title}
+                            style={{ height: '200px', objectFit: 'contain' }}
+                        />
+                        <div className="card-body d-flex flex-column">
+                            <h5 className="card-title text-truncate" title={product.title}>{product.title}</h5>
+                            <p className="card-text text-muted small">{product.category}</p>
+                            <p className="card-text">{product.description.slice(0, 60)}...</p>
+                            <p className="card-text fw-bold">$ {product.price.toFixed(2)}</p>
+                            <div className="mt-auto">
+                                <button className="btn btn-primary w-100">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             ));
         } else {
-            return (
-                <tr>
-                    <td colSpan={7} className="text-center">No Items Found</td>
-                </tr>
-            );
+            return <p className="text-center w-100">No products found.</p>;
         }
     };
+
 
     return (
         <div className="container my-4 main-container">
@@ -115,25 +130,17 @@ export default function ProductList() {
 
             <div className="mt-5">
                 <h4 className="text-center">Products</h4>
-                <div className="table-responsive">
-                    <table className="table table-striped table-bordered custom-table">
-                        <thead className="table-dark">
-                            <tr>
-                                <th>#ID</th>
-                                <th>Title</th>
-                                <th>Price</th>
-                                <th>Description</th>
-                                <th>Category</th>
-                                <th>Image</th>
-                                <th>Rating</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {displayProducts()}
-                        </tbody>
-                    </table>
+                <div className="row">
+                    {displayProducts()}
                 </div>
             </div>
+            <div className="mt-5">
+                <h4 className="text-center">Products</h4>
+                <div className="row">
+                    {displayProducts()}
+                </div>
+            </div>
+
         </div>
     );
 }
